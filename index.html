@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ff4b6e, #ff758c);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.container {
+    background: white;
+    padding: 40px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(0,0,0,0.3);
+    max-width: 420px;
+    width: 90%;
+    position: relative;
+    z-index: 1;
+}
+h1, h2 {
+    color: #ff2e63;
+    margin-bottom: 15px;
+}
+p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 30px;
+}
+button {
+    padding: 12px 30px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+    background: #ff69b4;
+    color: white;
+}
+button:hover { transform: scale(1.1); }
+
+/* NO button style */
+#noBtn {
+    background: white;
+    color: black;
+    border: 2px solid #ff69b4;
+    position: absolute;
+}
+
+/* Confetti */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    top: -10px;
+    animation: fall linear infinite;
+}
+@keyframes fall {
+    to { transform: translateY(110vh) rotate(360deg); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="container">
+    <h1>💖 Will You Be My Valentine? 💖</h1>
+    <div class="from">From Mammam 💕 for Babai ❤️</div>
+    <div class="buttons" style="position:relative;height:120px;">
+        <button id="yesBtn">YES 💖</button>
+        <button id="noBtn">NO 😒</button>
+    </div>
+</div>
+
+<script>
+const container = document.getElementById("container");
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+
+// NO Button moves away
+noBtn.addEventListener("mouseover", () => {
+    const box = document.querySelector(".buttons");
+    const maxX = box.clientWidth - noBtn.clientWidth;
+    const maxY = box.clientHeight - noBtn.clientHeight;
+    const randX = Math.random() * maxX;
+    const randY = Math.random() * maxY;
+    noBtn.style.left = randX + "px";
+    noBtn.style.top = randY + "px";
+});
+
+// Function to create confetti
+function createConfetti() {
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+    const colors = ["#ff69b4","#ff9a9e","#fad0c4","#fbc2eb","#a18cd1"];
+    confetti.style.left = Math.random() * 100 + "vw";
+    confetti.style.background = colors[Math.floor(Math.random()*colors.length)];
+    confetti.style.animationDuration = (2 + Math.random()*3) + "s";
+    document.body.appendChild(confetti);
+    setTimeout(() => { confetti.remove(); }, 5000);
+}
+
+// Generate confetti continuously
+function startConfetti(count) {
+    for(let i=0;i<count;i++){
+        setTimeout(createConfetti, i*50);
+    }
+}
+
+// YES button click sequence
+yesBtn.addEventListener("click", () => {
+    // Step 1: WELL DONE
+    container.innerHTML = `
+        <h1>🎉 WELL DONE! 🎉</h1>
+        <p>You have made your best decision ever 🤭</p>
+        <button id="nextBtn">Next ➡️</button>
+    `;
+    startConfetti(150);
+
+    document.getElementById("nextBtn").addEventListener("click", () => {
+        // Step 2: I LOVE YOU
+        container.innerHTML = `
+            <h1>😘❤️ I love you a lot!</h1>
+            <p>Mr. Ungrateful Potato 😘❤️</p>
+        `;
+        startConfetti(200);
+    });
+});
+</script>
+
+</body>
+</html>
